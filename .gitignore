@@ -50,11 +50,10 @@ coverage.xml
 
 # Django stuff:
 *.log
-blog/migrations/0*
+*/migrations/0*
+*/__pycache__/
 whoosh_index/
 collected_static/
-blog/__pycache__/
-blog_project/__pycache__/
 
 
 # Sphinx documentation
