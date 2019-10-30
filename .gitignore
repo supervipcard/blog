@@ -105,5 +105,4 @@ venv.bak/
 
 # custom
 .idea/
-whoosh_index/
 collected_static/
