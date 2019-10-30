@@ -25,7 +25,7 @@ SECRET_KEY = 'lb_kpa9-l5s1vh90ein+^r=zk+ameu28dh%6nx*p=!^8cb+gxs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '68.168.140.8', 'localhost', '.wsxiangchen.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.wsxiangchen.com']
 
 # Application definition
 
@@ -44,7 +44,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -93,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog_database',
-        'USER': '***',
-        'PASSWORD': '***',
+        'USER': 'xiangchen',
+        'PASSWORD': 'Pl1996317',
         'HOST': 'localhost',
         'PORT': '3306',
         'CHARSET': 'utf8'
@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-us'    # 中文zh-hans
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -133,11 +133,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 DEFAULT_FILE_STORAGE = 'blog.storage.ImageStorage'
 
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static').replace('\\', '/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static').replace('\\', '/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static').replace('\\', '/'),
 )
@@ -150,9 +151,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads').replace('\\', '/')
 SERVER_EMAIL = '805071841@qq.com'
 ADMINS = (('xiangchen', '805071841@qq.com'), )
 EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '805071841@qq.com'
-EMAIL_HOST_PASSWORD = '***'
+EMAIL_HOST_PASSWORD = 'nwqihodadverbedf'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 引擎
+SESSION_COOKIE_NAME = "sessionid"  # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
+SESSION_COOKIE_PATH = "/"  # Session的cookie保存的路径
+SESSION_COOKIE_DOMAIN = None  # Session的cookie保存的域名
+SESSION_COOKIE_SECURE = False  # 是否Https传输cookie
+SESSION_COOKIE_HTTPONLY = True  # 是否Session的cookie只支持http传输
+SESSION_COOKIE_AGE = 604800  # Session的cookie失效日期
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 是否关闭浏览器使得Session过期
+SESSION_SAVE_EVERY_REQUEST = False  # 是否每次请求都保存Session，默认修改之后才保存
+
 
 LOGGING = {
     'version': 1,

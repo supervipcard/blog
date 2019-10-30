@@ -1,0 +1,99 @@
+<div class="content comment-box">
+    <div class="post-comment">
+        <div class="title">
+            <h3>发表评论</h3>
+            <div class="more" style="display: none">
+                <a onclick="cancelReply()">取消回复</a>
+            </div>
+        </div>
+        <form id="comment-form" method="post">
+            <textarea class="form-control" placeholder="写点什么..." id="content" cols="100%" rows="4" tabindex="1" required="required"></textarea>
+            {% if not login_status %}
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control" id="username" placeholder="昵称（必填）" maxlength="16" tabindex="2" aria-describedby="basic-addon1" required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope-o"></i></span>
+                    <input type="email" class="form-control" id="email" placeholder="邮箱（必填）" maxlength="64" tabindex="3" aria-describedby="basic-addon1" required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-link"></i></span>
+                    <input type="url" class="form-control" id="website" placeholder="网站（选填）" maxlength="64" tabindex="4" aria-describedby="basic-addon1">
+                </div>
+            {% else %}
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control" id="username" value="{{ username }}" placeholder="昵称（必填）" maxlength="16" tabindex="2" aria-describedby="basic-addon1" required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope-o"></i></span>
+                    <input type="email" class="form-control" id="email" value="{{ email }}" placeholder="邮箱（必填）" maxlength="64" tabindex="3" aria-describedby="basic-addon1" required="required">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-link"></i></span>
+                    <input type="url" class="form-control" id="website" value="{{ website }}" placeholder="网站（选填）" maxlength="64" tabindex="4" aria-describedby="basic-addon1">
+                </div>
+            {% endif %}
+            <input type="hidden" id="aid" value="{{ article.id }}">
+            <button class="btn btn-default btn-search" type="submit">发表评论</button>
+        </form>
+    </div>
+    <div class="message">
+        <div class="title">
+            <h3>共有 {{ article.comment_content.all|length }} 条评论</h3>
+        </div>
+        <ul class="comment-message">
+            {% for key, value in comments.items %}
+                <li class="message-item" id="message-{{ key.id }}">
+                    <div class="message-details">
+                        <img src="/static/images/head-portrait.png" alt="">
+                        <a onclick="reply({{ key.id }}, {{ key.id }}, '{{ key.username }}')">回复</a>
+                        <p>
+                            {% if key.website %}
+                                <a href="{{ key.website }}" target="_blank">{{ key.username }}</a>
+                            {% else %}
+                                {{ key.username }}
+                            {% endif %}
+                        </p>
+                        <p>{{ key.time | date:"Y-m-d H:i" }}</p>
+                    </div>
+                    <div class="comment-content">{{ key.content|safe }}</div>
+                    {% if value %}
+                        <ul class="reply-message">
+                            {% for cell in value %}
+                                <li class="message-item" id="message-{{ cell.0.id }}">
+                                    <div class="message-details">
+                                        <img src="/static/images/head-portrait.png" alt="">
+                                        <a onclick="reply({{ key.id }}, {{ cell.0.id }}, '{{ cell.0.username }}')">回复</a>
+                                        <p>
+                                            {% if cell.0.website %}
+                                                <a href="{{ cell.0.website }}" target="_blank">{{ cell.0.username }}</a>
+                                            {% else %}
+                                                {{ cell.0.username }}
+                                            {% endif %}
+                                            {% if cell.0.email == "805071841@qq.com" %}
+                                            <span class="blogger-sign">[博主]</span>
+                                            {% endif %}
+                                            <i class="fa fa-share"></i>
+                                            {% if cell.1.website %}
+                                                <a href="{{ cell.1.website }}" target="_blank">{{ cell.1.username }}</a>
+                                            {% else %}
+                                                {{ cell.1.username }}
+                                            {% endif %}
+                                            {% if cell.1.email == "805071841@qq.com" %}
+                                            <span class="blogger-sign">[博主]</span>
+                                            {% endif %}
+                                        </p>
+                                        <p>{{ cell.0.time | date:"Y-m-d H:i" }}</p>
+                                    </div>
+                                    <div class="comment-content">{{ cell.0.content|safe }}</div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

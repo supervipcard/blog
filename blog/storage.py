@@ -1,7 +1,7 @@
+import os
 import uuid
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-import os
 
 
 # ImageField图片上传（修改保存的图片名）

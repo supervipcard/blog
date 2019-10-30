@@ -1,11 +1,12 @@
-# -*- coding: utf-8 -*-
-from django.http import HttpResponse
-from django.conf import settings
 import os
 import uuid
 import json
+from django.http import HttpResponse
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def upload_image(request, dir_name):
     result = {"error": 1, "message": "上传出错"}
     files = request.FILES.get("imgFile", None)   # 取得上传的图片数据
@@ -15,7 +16,7 @@ def upload_image(request, dir_name):
 
 
 def image_upload(files, dir_name):
-    allow_suffix = ['.jpg', '.png', '.jpeg', '.gif', '.bmp']
+    allow_suffix = ['.jpg', '.png', '.jpeg', '.gif', '.bmp', '.webp']
     file_suffix = os.path.splitext(files.name)[1]   # 图片扩展名
     if file_suffix not in allow_suffix:
         return {"error": 1, "message": "图片格式不正确"}

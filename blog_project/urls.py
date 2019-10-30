@@ -16,24 +16,24 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include
-from blog.views import index, details, technique, note, tags, date, praise_ajax, comment_ajax, about
 from django.conf import settings
 from django.views import static
+
+from blog import views
 from blog.upload import upload_image
-from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^uploads/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT}),   # 封面图和文章内的图片显示
     url(r'^admin/load/(?P<dir_name>[^/]+)$', upload_image),   # 富文本编辑器内的图片上传接口
     url(r'^admin/', admin.site.urls),
     url(r'^search/', include('haystack.urls')),
-    url(r'^praise-ajax/$', praise_ajax, name='praise-ajax'),
-    url(r'^comment-ajax/$', comment_ajax, name='comment-ajax'),
-    url(r'^details/$', details, name='details'),
-    url(r'^technique/$', technique, name='technique'),
-    url(r'^note/$', note, name='note'),
-    url(r'^tags/(?P<tag>.*?)/$', tags, name='tags'),
-    url(r'^date/(?P<year>.*?)/(?P<month>.*?)/$', date, name='date'),
-    url(r'^about/$', about, name='about'),
-    url(r'^$', index),
+    url(r'^praise-ajax/$', views.praise_ajax, name='praise-ajax'),
+    url(r'^comment-ajax/$', views.comment_ajax, name='comment-ajax'),
+    url(r'^details/(?P<id>.*?)/$', views.details, name='details'),
+    url(r'^technique/$', views.technique, name='technique'),
+    url(r'^journal/$', views.journal, name='journal'),
+    url(r'^tag/(?P<tag_name>.*?)/$', views.tag, name='tag'),
+    url(r'^date/(?P<year>.*?)/(?P<month>.*?)/$', views.date, name='date'),
+    url(r'^about/$', views.about, name='about'),
+    url(r'^$', views.home, name='home'),
 ]

@@ -1,0 +1,46 @@
+{% include 'base.html' %}
+
+{% block body %}
+<body>
+    {% include 'header-block.html' %}
+    <section class="container">
+        <div class="content-wrap">
+            <div class="content">
+                {% block picture %}
+                {% endblock %}
+                {% for article in articles %}
+                    {% if not article.hide %}
+                    <article class="excerpt excerpt-1">
+                        <a class="focus" href="{% url 'details' id=article.id %}" title="{{ article.title }}"><img class="thumb" src="/uploads/{{ article.image }}" alt=""></a>
+                        <header>
+                            {% block content %}
+                            <a class="cat" href="{% url 'tag' tag_name=article.tag.first.name %}" title="{{ article.tag.first.name }}">{{ article.tag.first.name }}</a>
+                            {% endblock %}
+                            <h2><a href="{% url 'details' id=article.id %}" title="{{ article.title }}">{{ article.title }}</a></h2>
+                        </header>
+                        <p class="meta">
+                            <span class="time"><i class="glyphicon glyphicon-time"></i> {{ article.time | date:"Y-m-d" }}</span>
+                            <span class="views"><i class="glyphicon glyphicon-eye-open"></i> {{ article.read_count }}浏览</span>
+                            <span class="praise"><i class="glyphicon glyphicon-thumbs-up"></i> {{ article.praise_count }}点赞</span>
+                            <span class="comment"><i class="glyphicon glyphicon-comment"></i> {{ article.comment_content.all|length }}评论</span>
+                        </p>
+                        <p class="note">{{ article.article|striptags|safe|cut:'&emsp;'|cut:'&nbsp;'|truncatechars:150 }}</p>
+                    </article>
+                    {% endif %}
+                {% endfor %}
+                <nav class="pagination" style="display: none">
+                    <ul>
+                        <li class="prev-page"></li>
+                        <li class="active"><span>{{ articles.number }}</span></li>
+                        {% if articles.has_next %}
+                            <li class="next-page"><a href="?page={{ articles.next_page_number }}">下一页</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% include 'aside-block.html' %}
+    </section>
+    {% include 'footer-block.html' %}
+</body>
+{% endblock %}

@@ -1,36 +1,16 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>项晨个人博客</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    {% load highlight %}
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/nprogress.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
-    <script src="/static/js/jquery-2.1.4.min.js"></script>
-    <script src="/static/js/nprogress.js"></script>
-    <!--[if gte IE 9]>
-      <script src="/static/js/jquery-1.11.1.min.js" type="text/javascript"></script>
-      <script src="/static/js/html5shiv.min.js" type="text/javascript"></script>
-      <script src="/static/js/respond.min.js" type="text/javascript"></script>
-      <script src="/static/js/selectivizr-min.js" type="text/javascript"></script>
-    <![endif]-->
-    <!--[if lt IE 9]>
-      <script>window.location.href='upgrade-browser.html';</script>
-    <![endif]-->
-</head>
+{% extends 'base.html' %}
+
+{% block extra %}
+{% load highlight %}
+{% endblock %}
+
+{% block body %}
 <style>
     span.highlighted {
         color: red;
     }
 </style>
-<body class="user-select">
+<body>
     {% include 'header-block.html' %}
     <section class="container">
         <div class="content-wrap">
@@ -38,24 +18,26 @@
             {% if query %}
                 <div class="search-heading"><p>搜索关键词：{{ query }}</p></div>
                 {% for result in page.object_list %}
+                    {% if not result.object.hide %}
                     <article class="excerpt excerpt-1">
-                        <a class="focus" href="{% url 'details' %}?id={{ result.object.id }}" title="{{ result.object.title }}"><img class="thumb" data-original="/uploads/{{ result.object.image }}" src="/uploads/{{ result.object.image }}" alt=""  style="display: inline;"></a>
+                        <a class="focus" href="{% url 'details' id=result.object.id %}" title="{{ result.object.title }}"><img class="thumb" src="/uploads/{{ result.object.image }}" alt=""></a>
                         <header>
-                            <a class="cat" href="{% url 'tags' tag=result.object.tag.first %}" title="{{ result.object.tag.first }}" >{{ result.object.tag.first }}<i></i></a>
-                            <h2><a href="{% url 'details' %}?id={{ result.object.id }}" title="{{ result.object.title }}">{{ result.object.title }}</a></h2>
+                            <a class="cat" href="{% url 'tag' tag_name=result.object.tag.first.name %}" title="{{ result.object.tag.first.name }}">{{ result.object.tag.first.name }}</a>
+                            <h2><a href="{% url 'details' id=result.object.id %}" title="{{ result.object.title }}">{{ result.object.title }}</a></h2>
                         </header>
                         <p class="meta">
-                            <time class="time"><i class="glyphicon glyphicon-time"></i> {{ result.object.time | date:"Y-m-d" }}</time>
+                            <span class="time"><i class="glyphicon glyphicon-time"></i> {{ result.object.time | date:"Y-m-d" }}</span>
                             <span class="views"><i class="glyphicon glyphicon-eye-open"></i> {{ result.object.read_count }}浏览</span>
                             <span class="praise"><i class="glyphicon glyphicon-thumbs-up"></i> {{ result.object.praise_count }}喜欢</span>
-                            <span class="comment"><i class="glyphicon glyphicon-comment"></i> {{ result.object.comment_count }}评论</span>
+                            <span class="comment"><i class="glyphicon glyphicon-comment"></i> {{ result.object.comment_content.all|length }}评论</span>
                         </p>
-                        <p class="note">{% highlight result.object.article with query html_tag "span" css_class "highlighted" max_length 150 %} </p>
+                        <p class="note">{% highlight result.object.article with query html_tag "span" css_class "highlighted" max_length 150 %}</p>
                     </article>
+                    {% endif %}
                 {% empty %}
                     <div class="search-heading"><p>抱歉，没有搜索到您想要的结果！</p></div>
                 {% endfor %}
-                <nav class="pagination" style="display: none;">
+                <nav class="pagination" style="display: none">
                     <ul>
                         <li class="prev-page"></li>
                         <li class="active"><span>{{ page.number }}</span></li>
@@ -72,8 +54,5 @@
         {% include 'aside-block.html' %}
     </section>
     {% include 'footer-block.html' %}
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/jquery.ias.js"></script>
-    <script src="/static/js/scripts.js"></script>
 </body>
-</html>
+{% endblock %}
