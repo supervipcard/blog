@@ -69,7 +69,7 @@ def about(request):
 def details(request, id):
     if request.method == 'GET':
         try:
-            article = Article.objects.get(id=id)
+            article = Article.objects.get(Q(id=id), Q(hide=False))
             article.read_count = article.read_count + 1
             article.save()
             related_articles = Article.objects.get_related_articles(article.tag.all(), article.title)[0: 5]
