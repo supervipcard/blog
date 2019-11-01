@@ -14,18 +14,19 @@ import os
 import pymysql
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'lb_kpa9-l5s1vh90ein+^r=zk+ameu28dh%6nx*p=!^8cb+gxs'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.wsxiangchen.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -93,8 +94,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog_database',
-        'USER': 'xiangchen',
-        'PASSWORD': 'Pl1996317',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
         'CHARSET': 'utf8'
@@ -154,7 +155,7 @@ EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '805071841@qq.com'
-EMAIL_HOST_PASSWORD = 'nwqihodadverbedf'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
@@ -167,39 +168,3 @@ SESSION_COOKIE_HTTPONLY = True  # 是否Session的cookie只支持http传输
 SESSION_COOKIE_AGE = 604800  # Session的cookie失效日期
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 是否关闭浏览器使得Session过期
 SESSION_SAVE_EVERY_REQUEST = False  # 是否每次请求都保存Session，默认修改之后才保存
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[%(asctime)s] [%(levelname)s] %(message)s'
-        },
-    },
-    'handlers': {
-        'console':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
-            'formatter': 'verbose'
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'logging.log',
-            'formatter': 'verbose'
-        },
-        'email': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html' : True,
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file', 'email'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
