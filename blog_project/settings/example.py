@@ -17,6 +17,17 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://localhost:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": "123456",
+        }
+    }
+}
+
 SERVER_EMAIL = '805071841@qq.com'
 ADMINS = (('xiangchen', '805071841@qq.com'), )
 EMAIL_HOST = 'smtp.qq.com'
