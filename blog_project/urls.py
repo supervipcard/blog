@@ -23,6 +23,7 @@ from blog import views
 from blog.upload import upload_image
 
 urlpatterns = [
+    url(r'^static/(?P<path>.*)$', static.serve, {'document_root': settings.STATIC_ROOT}),
     url(r'^uploads/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT}),   # 封面图和文章内的图片显示
     url(r'^admin/load/(?P<dir_name>[^/]+)$', upload_image),   # 富文本编辑器内的图片上传接口
     url(r'^admin/', admin.site.urls),
