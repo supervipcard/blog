@@ -73,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_project.wsgi.application'
 
-
 # 全文检索框架配置
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -84,7 +83,6 @@ HAYSTACK_CONNECTIONS = {
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -124,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 
-LANGUAGE_CODE = 'en-us'    # 中文zh-hans
+LANGUAGE_CODE = 'en-us'  # 中文zh-hans
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -134,9 +132,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 DEFAULT_FILE_STORAGE = 'blog.storage.ImageStorage'
-
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static').replace('\\', '/')
@@ -144,20 +140,17 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static').replace('\\', '/'),
 )
 
-
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads').replace('\\', '/')
 
-
 SERVER_EMAIL = '805071841@qq.com'
-ADMINS = (('xiangchen', '805071841@qq.com'), )
+ADMINS = (('xiangchen', '805071841@qq.com'),)
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '805071841@qq.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 引擎
 SESSION_COOKIE_NAME = "sessionid"  # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串

@@ -29,7 +29,7 @@ CACHES = {
 }
 
 SERVER_EMAIL = '805071841@qq.com'
-ADMINS = (('xiangchen', '805071841@qq.com'), )
+ADMINS = (('xiangchen', '805071841@qq.com'),)
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -46,9 +46,9 @@ LOGGING = {
         },
     },
     'handlers': {
-        'console':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
         'file': {
@@ -60,7 +60,7 @@ LOGGING = {
         'email': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            'include_html' : True,
+            'include_html': True,
         }
     },
     'loggers': {
